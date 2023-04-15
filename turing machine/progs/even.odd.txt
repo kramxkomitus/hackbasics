@@ -1,0 +1,16 @@
+# If input contains odd amount of zeroes
+# Possible input values: 0, 1
+
+prog.txt
+even , 0 , odd    ,  0  , >
+odd  , 0 , even   ,  0  , >
+even , 1 , STOP , 'N' , _
+odd  , 1 , STOP , 'Y' , _
+START, 0 , odd   ,  0  , >
+START, 1 , odd   ,  1  , _
+
+data.txt
+
+5
+
+0, 0, 0, 0, 1
