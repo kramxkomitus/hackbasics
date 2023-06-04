@@ -1,49 +1,61 @@
 from enum import Enum
 from dataclasses import dataclass
 import pandas as pd
+import re
 
-class Token_t(Enum):
+# @dataclass
+
+class Token_e(Enum):
     open = 1
     close = 2
     ID = 3
     string = 3
     number = 4
 
-@dataclass
-
 class Token:
-    type: Token_t
-    val: str
+    def __init__(self, string:str) -> None:
 
-def lex_str(line: str):
-        import re
-        expression = list()
+        self.type = Token_e
+        self.val = string
+
+        if self.val == '(':
+            self.type = Token_e.open
+        elif self.val == ')':
+            self.type = Token_e.close
+        elif self.val.isdigit() \
+                or self.val.replace('.', '').isdigit() \
+                or self.val.replace(',', '').isdigit():
+            self.type = Token_e.number
+        else:
+            self.type = Token_e.ID
+
+    def __str__(self) -> str:
+        return str(self.val)
+
+class lex_str:
+    def __init__(self, string: str) -> None:
+
+        self.expression = list()
+        
+        string = string.replace('(', '( ')
+        string = string.replace(')', ' )')
         pattern =  r"\s(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
-        line = re.split(pattern, line.strip())
-        print()
-        print(line)
-        print('-'*100)
-        print()
-        for literal in line:
-            token = Token(False, literal)
-            if literal == '':
-                continue
-            if literal == '(':
-                token.type = Token_t.open
-            elif literal == '(':
-                token.type = Token_t.close
-            elif literal.isdigit():
-                token.type = Token_t.number
-            else:
-                token.type = Token_t.ID
-            expression.append(token)
-        show_str(expression)
-        return expression
+        string = re.split(pattern, string.strip())
+        for literal in string:
+            if literal != '':
+                token = Token(literal)
+                self.expression.append(token)
+    
+    def __getitem__(self, index):
+        return self.expression[index]
+    
 
-def show_str(exp):
-    print()
-    print(exp)
-    print("="*30, '\n')
-    exp = pd.DataFrame(exp)
-    exp = exp[['val', 'type']]
-    print(exp)
+    def show(self):
+        print("="*30, '\n')
+        cute_output = {
+            'type': [T.type for T in self.expression],
+            'value': [T.val for T in self.expression]
+        }
+        print(pd.DataFrame(cute_output))
+
+        
