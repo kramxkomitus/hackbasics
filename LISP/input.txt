@@ -1,1 +1,1 @@
-( foo ( man 342 23 ) klj )
+( add ( add 10 10 ) 2 3)

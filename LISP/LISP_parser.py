@@ -40,24 +40,7 @@ def parse(token_list : lexer.lex_str):
                 rest.append(s_exp)
             elif item.type == lexer.Token_e.close:
                 res = S_exp_c(car, rest)
-                print(res)
                 return res, i
             else:
                 rest.append(item)
             i += 1
-
-
-file = open('LISP/input.txt', 'r', encoding="utf8")
-try:
-    for line in file.readlines():
-        print(line)
-        lexed = lexer.lex_str(line)
-        lexed.show()
-        result = parse(lexed)[0]
-        print(result)
-
-
-except:
-    print("problem")
-
-file.close()
